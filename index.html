@@ -3,306 +3,560 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    [cite_start]<title>Omar Aboolo - Portfolio [cite: 2]</title>
+    <title>Omar Aboolo - Portfolio</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        /* Medical & Research Theme: Navy Blue, Teal, and Clean White */
+        /* CSS Variables for Light/Dark Mode */
+        :root {
+            --bg-color: #f4f7f6;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+            --primary-color: #003366;
+            --secondary-color: #008080;
+            --accent-color: #e0f2f1;
+            --border-color: #dddddd;
+            --text-muted: #666666;
+            --transition-speed: 0.3s;
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #121212;
+            --text-color: #e0e0e0;
+            --card-bg: #1e1e1e;
+            --primary-color: #64b5f6;
+            --secondary-color: #4db6ac;
+            --accent-color: #004d40;
+            --border-color: #333333;
+            --text-muted: #aaaaaa;
+        }
+
+        /* Global Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #f4f7f6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
             margin: 0;
             padding: 0;
+            transition: background-color var(--transition-speed), color var(--transition-speed);
+            overflow-x: hidden;
         }
+
+        /* Header & Typing Effect */
         header {
-            background-color: #003366;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: #ffffff;
-            padding: 3rem 1rem;
+            padding: 5rem 1rem;
             text-align: center;
-            border-bottom: 5px solid #008080;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         header h1 {
             margin: 0;
-            font-size: 2.8rem;
-            letter-spacing: 1px;
+            font-size: 3.5rem;
+            letter-spacing: 2px;
+            animation: dropIn 1s ease-out;
         }
-        header p {
-            margin: 10px 0 0;
+        .contact-info {
+            margin-top: 15px;
             font-size: 1.1rem;
+            opacity: 0.9;
+            animation: fadeIn 1.5s ease-out;
+        }
+        .contact-info i {
+            margin: 0 5px 0 15px;
+        }
+        .contact-info a {
+            color: #ffffff;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .contact-info a:hover {
+            color: #b2dfdb;
+        }
+
+        /* Typing Animation Container */
+        .typing-container {
+            font-size: 1.5rem;
+            margin-top: 10px;
+            height: 30px;
             color: #e0f2f1;
         }
+        .typed-text {
+            border-right: 2px solid #e0f2f1;
+            padding-right: 5px;
+            animation: blinkCursor 0.75s step-end infinite;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.2);
+            border: none;
+            color: #fff;
+            padding: 10px 15px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .theme-toggle:hover {
+            background: rgba(255,255,255,0.3);
+            transform: scale(1.1);
+        }
+
+        /* Container & Sections */
         .container {
             max-width: 900px;
-            margin: 2rem auto;
-            background: #ffffff;
+            margin: -3rem auto 2rem auto;
+            position: relative;
+            z-index: 10;
+        }
+        section {
+            background: var(--card-bg);
             padding: 2.5rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            margin-bottom: 2rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         h2 {
-            color: #003366;
-            border-bottom: 2px solid #008080;
-            padding-bottom: 8px;
-            margin-top: 2rem;
-            font-size: 1.8rem;
-        }
-        h2:first-child {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            display: inline-block;
+            padding-bottom: 5px;
             margin-top: 0;
+            font-size: 2rem;
         }
-        .item {
-            margin-bottom: 1.8rem;
+
+        /* Cards for Experience & Projects */
+        .card {
+            padding: 1.5rem;
+            border-left: 4px solid var(--secondary-color);
+            background: var(--bg-color);
+            border-radius: 0 8px 8px 0;
+            margin-bottom: 1.5rem;
+            transition: transform var(--transition-speed), box-shadow var(--transition-speed);
         }
-        .item-header {
+        .card:hover {
+            transform: translateX(10px) translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+        }
+        .card-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
             flex-wrap: wrap;
+            margin-bottom: 5px;
         }
-        .item-title {
-            font-size: 1.25rem;
+        .card-title {
+            font-size: 1.3rem;
             font-weight: bold;
-            color: #222;
+            color: var(--text-color);
         }
-        .item-subtitle {
+        .card-subtitle {
             font-weight: bold;
-            color: #008080;
-            margin-top: 4px;
+            color: var(--secondary-color);
+            width: 100%;
+            margin-top: 2px;
         }
-        .item-date {
-            color: #666;
+        .card-date {
+            color: var(--text-muted);
             font-size: 0.95rem;
-            font-weight: 500;
+            font-weight: 600;
+            background: var(--accent-color);
+            padding: 3px 10px;
+            border-radius: 15px;
         }
         ul {
-            margin-top: 8px;
             padding-left: 20px;
+            margin-bottom: 0;
         }
         li {
-            margin-bottom: 6px;
+            margin-bottom: 8px;
         }
+
+        /* Tables for Honors */
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 15px;
-            margin-bottom: 15px;
         }
         th, td {
-            border: 1px solid #ddd;
+            border: 1px solid var(--border-color);
             padding: 12px;
             text-align: left;
         }
         th {
-            background-color: #f0f4f8;
-            color: #003366;
+            background-color: var(--accent-color);
+            color: var(--primary-color);
             font-weight: bold;
         }
-        .skills-category {
-            font-weight: bold;
-            color: #008080;
-            margin-top: 15px;
+        tr {
+            transition: background-color 0.3s;
         }
+        tr:hover {
+            background-color: var(--bg-color);
+        }
+
+        /* Interactive Skills Pills */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .skill-category {
+            width: 100%;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-top: 10px;
+            margin-bottom: 5px;
+        }
+        .skill-pill {
+            background: var(--accent-color);
+            color: var(--primary-color);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: default;
+            transition: transform 0.2s, background 0.2s, color 0.2s;
+        }
+        .skill-pill:hover {
+            transform: scale(1.1);
+            background: var(--primary-color);
+            color: #ffffff;
+        }
+
+        /* Animations */
+        @keyframes dropIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes blinkCursor {
+            50% { border-color: transparent; }
+        }
+
         footer {
             text-align: center;
-            padding: 1.5rem 0;
-            margin-top: 3rem;
-            background-color: #003366;
-            color: #ffffff;
-            font-size: 0.9rem;
+            padding: 2rem 0;
+            background-color: var(--card-bg);
+            color: var(--text-muted);
+            font-size: 1rem;
+            border-top: 1px solid var(--border-color);
         }
     </style>
 </head>
 <body>
 
     <header>
-        [cite_start]<h1>Omar Aboolo [cite: 2]</h1>
-        <p>omaraboolo924@gmail.com | [cite_start]+201090080696 [cite: 3]</p>
+        <button class="theme-toggle" id="theme-toggle" title="Toggle Dark Mode">
+            <i class="fas fa-moon"></i>
+        </button>
+        <h1>Omar Aboolo</h1>
+        <div class="typing-container">
+            <span class="typed-text" id="typed-text"></span>
+        </div>
+        <div class="contact-info">
+            <i class="fas fa-envelope"></i> <a href="mailto:omaraboolo924@gmail.com">omaraboolo924@gmail.com</a>
+            <i class="fas fa-phone"></i> +201090080696
+        </div>
     </header>
 
     <div class="container">
-        [cite_start]<h2>Education [cite: 1]</h2>
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Faculty of Medicine, Alexandria University [cite: 6]</span>
-                [cite_start]<span class="item-date">Sept 2025 - In Progress [cite: 10]</span>
+        <section class="scroll-anim">
+            <h2><i class="fas fa-user-graduate"></i> Education</h2>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Faculty of Medicine, Alexandria University</span>
+                    <span class="card-date">Sept 2025 - In Progress</span>
+                </div>
+                <div class="card-subtitle">Bachelor of Medicine and Bachelor of Surgery (MBBS)</div>
             </div>
-            [cite_start]<div class="item-subtitle">Bachelor of Medicine and Bachelor of Surgery (MBBS) [cite: 6]</div>
-        </div>
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">STEM High School for Boys - 6th of October [cite: 4]</span>
-                [cite_start]<span class="item-date">Sept 2022 - Aug 2025 [cite: 9]</span>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">STEM High School for Boys - 6th of October</span>
+                    <span class="card-date">Sept 2022 - Aug 2025</span>
+                </div>
+                <div class="card-subtitle">STEM High School Diploma</div>
+                <ul>
+                    <li><strong>GPA:</strong> 4.0/4.0</li>
+                </ul>
             </div>
-            [cite_start]<div class="item-subtitle">STEM High School Diploma [cite: 4]</div>
-            <ul>
-                [cite_start]<li>GPA: 4.0/4.0 [cite: 5]</li>
-            </ul>
-        </div>
+        </section>
 
-        [cite_start]<h2>Experience [cite: 7]</h2>
-        
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Research Administrator, Youth Science Journal [cite: 8]</span>
-                [cite_start]<span class="item-date">Jan 2024 - Jan 2025 [cite: 11]</span>
+        <section class="scroll-anim">
+            <h2><i class="fas fa-briefcase"></i> Experience</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Research Administrator, Youth Science Journal</span>
+                    <span class="card-date">Jan 2024 - Jan 2025</span>
+                </div>
+                <ul>
+                    <li>Mentored and guided over 100 junior researchers from 20 countries in writing and publishing their first scientific papers, improving acceptance quality and publication readiness.</li>
+                    <li>Co-reviewed 1,000+ applications for junior researcher positions; selected the top 100 candidates based on research potential and academic merit.</li>
+                    <li>Designed and delivered the research curriculum (introductory to advanced), and reviewed/edited content for multiple journal issues.</li>
+                </ul>
             </div>
-            <ul>
-                [cite_start]<li>Mentored and guided over 100 junior researchers from 20 countries in writing and publishing their first scientific papers, improving acceptance quality and publication readiness. [cite: 12]</li>
-                [cite_start]<li>Co-reviewed 1,000+ applications for junior researcher positions; selected the top 100 candidates based on research potential and academic merit. [cite: 13]</li>
-                [cite_start]<li>Designed and delivered the research curriculum (introductory to advanced), and reviewed/edited content for multiple journal issues. [cite: 14]</li>
-            </ul>
-        </div>
 
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Researcher, Lumiere Education [cite: 15]</span>
-                [cite_start]<span class="item-date">Dec 2023 - May 2024 [cite: 16]</span>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Researcher, Lumiere Education</span>
+                    <span class="card-date">Dec 2023 - May 2024</span>
+                </div>
+                <ul>
+                    <li><strong>Grade:</strong> A+ | <strong>Rank:</strong> Top 5% of the program.</li>
+                    <li>Authored a review paper, "Advancing CRISPR/Cas-Based Therapies for Genetic Ocular Diseases," supervised by Veronika Mantziou (PhD student, University of Cambridge).</li>
+                    <li>Assessed CRISPR/Cas9 systems and 3D organoid models, integrating biomedical science, neuroscience, and bioethics to evaluate safety and efficacy.</li>
+                </ul>
             </div>
-            <ul>
-                [cite_start]<li>Grade: A+ Rank: Top 5% of the program. [cite: 17]</li>
-                [cite_start]<li>Authored a review paper, "Advancing CRISPR/Cas-Based Therapies for Genetic Ocular Diseases," supervised by Veronika Mantziou (PhD student, University of Cambridge). [cite: 18]</li>
-                [cite_start]<li>Assessed CRISPR/Cas9 systems and 3D organoid models, integrating biomedical science, neuroscience, and bioethics to evaluate safety and efficacy. [cite: 19]</li>
-            </ul>
-        </div>
 
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Pioneer Scholar, The Global Problem-Solving Institute (Pioneer Academics) [cite: 20]</span>
-                [cite_start]<span class="item-date">Jul 2024 - Dec 2024 [cite: 21]</span>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Pioneer Scholar, Pioneer Academics</span>
+                    <span class="card-date">Jul 2024 - Dec 2024</span>
+                </div>
+                <ul>
+                    <li>Completed an interdisciplinary research program under Professor David Gatchell (Northwestern University).</li>
+                    <li>Conducted a final research project examining the causes, consequences, and community-based solutions to malnutrition in Egypt.</li>
+                </ul>
             </div>
-            <ul>
-                [cite_start]<li>Completed an interdisciplinary research program under Professor David Gatchell (Northwestern University). [cite: 22]</li>
-                [cite_start]<li>Conducted a final research project examining the causes, consequences, and community-based solutions to malnutrition in Egypt. [cite: 23]</li>
-            </ul>
-        </div>
 
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Co-founder, The International Fair of Youth Researchers (IFYR) [cite: 24]</span>
-                [cite_start]<span class="item-date">Jan 2024 - Jan 2025 [cite: 25]</span>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Co-founder, The International Fair of Youth Researchers (IFYR)</span>
+                    <span class="card-date">Jan 2024 - Jan 2025</span>
+                </div>
+                <ul>
+                    <li>Co-initiated and helped launch IFYR, providing high school researchers with opportunities to present work, undergo peer review, and publish distinguished papers.</li>
+                    <li>Organized the first edition, bringing together 170+ participants from 95+ institutions across 21+ countries.</li>
+                </ul>
             </div>
-            <ul>
-                [cite_start]<li>Co-initiated and helped launch IFYR, a competition under Youth Science Journal that provides high school researchers with opportunities to present work, go through peer review process, and publish distinguished papers. [cite: 26]</li>
-                [cite_start]<li>Organized the first edition of the fair, which brought together 170+ participants from 95+ institutions across 21+ countries, and contributed to developing submission guidelines, evaluation criteria, and assembling the review committee. [cite: 27]</li>
-            </ul>
-        </div>
 
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Biology Mentor & Competition Organizer, STEM October Biology Club [cite: 28]</span>
-                [cite_start]<span class="item-date">Jan 2024 - Dec 2024 [cite: 29]</span>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Biology Mentor & Competition Organizer, STEM October Biology Club</span>
+                    <span class="card-date">Jan 2024 - Dec 2024</span>
+                </div>
+                <ul>
+                    <li>Delivered a structured 15-session curriculum in genetics and evolution to 40 students.</li>
+                    <li>Organized the BioLeague competition, attracting 700+ participants from 20 countries.</li>
+                </ul>
             </div>
-            <ul>
-                [cite_start]<li>Delivered a structured 15-session curriculum in genetics and evolution to 40 students (sessions, handouts, and assignments). [cite: 30]</li>
-                [cite_start]<li>Organized the BioLeague competition, attracting 700+ participants from 20 countries. [cite: 31]</li>
-            </ul>
-        </div>
 
-        <div class="item">
-            <div class="item-header">
-                [cite_start]<span class="item-title">Capstone Organizer, STEM Schools Capstone Program [cite: 32]</span>
-                [cite_start]<span class="item-date">Oct 2024 - Mar 2025 [cite: 33]</span>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Capstone Organizer, STEM Schools Capstone Program</span>
+                    <span class="card-date">Oct 2024 - Mar 2025</span>
+                </div>
+                <ul>
+                    <li>Coordinated mentoring and delivered 12 instructional sessions on research methodology and presentation skills.</li>
+                </ul>
             </div>
-            <ul>
-                [cite_start]<li>Coordinated mentoring and delivered 12 instructional sessions on research methodology and presentation skills for first-year high school students. [cite: 34]</li>
-                [cite_start]<li>Evaluated trial exhibitions and provided targeted feedback to improve final capstone presentations. [cite: 35]</li>
-            </ul>
-        </div>
+        </section>
 
-        [cite_start]<h2>Honors and Competitions [cite: 36]</h2>
-        <table>
-            <tr>
-                <th>Award / Honor</th>
-                <th>Year</th>
-                <th>Details</th>
-            </tr>
-            <tr>
-                [cite_start]<td>Silver Medal - International Biogenesis Olympiad [cite: 37]</td>
-                [cite_start]<td>2023 [cite: 38]</td>
-                [cite_start]<td>Awarded Silver Honor in the molecular branch; ranked 3<sup>rd</sup> in Africa. [cite: 39]</td>
-            </tr>
-            <tr>
-                [cite_start]<td>Finalist - Biology League Competition [cite: 40]</td>
-                [cite_start]<td>2025 [cite: 40]</td>
-                [cite_start]<td>Ranked 4<sup>th</sup> out of 450 teams globally in a competitive general biology tournament. [cite: 40]</td>
-            </tr>
-            <tr>
-                [cite_start]<td>Top 1% - National STEM Diploma Graduation Exam [cite: 40]</td>
-                [cite_start]<td>2025 [cite: 40]</td>
-                [cite_start]<td>Ranked 16<sup>th</sup> out of 2,000 students nationwide. [cite: 40]</td>
-            </tr>
-            <tr>
-                [cite_start]<td>Top 5% - Egyptian Brain Bee [cite: 40]</td>
-                [cite_start]<td>2024 [cite: 40]</td>
-                [cite_start]<td>Ranked 17<sup>th</sup> out of 1,000+ participants. [cite: 40]</td>
-            </tr>
-            <tr>
-                [cite_start]<td>1<sup>st</sup> Place - Youth Science Journal Program (Junior Student) [cite: 40]</td>
-                [cite_start]<td>2023 [cite: 40]</td>
-                [cite_start]<td>Ranked 1<sup>st</sup> in the program with a 100% final mark. [cite: 40]</td>
-            </tr>
-        </table>
+        <section class="scroll-anim">
+            <h2><i class="fas fa-medal"></i> Honors and Competitions</h2>
+            <table>
+                <tr>
+                    <th>Award / Honor</th>
+                    <th>Year</th>
+                    <th>Details</th>
+                </tr>
+                <tr>
+                    <td>Silver Medal - International Biogenesis Olympiad</td>
+                    <td>2023</td>
+                    <td>Molecular branch; ranked 3<sup>rd</sup> in Africa.</td>
+                </tr>
+                <tr>
+                    <td>Finalist - Biology League Competition</td>
+                    <td>2025</td>
+                    <td>Ranked 4<sup>th</sup> out of 450 teams globally.</td>
+                </tr>
+                <tr>
+                    <td>Top 1% - National STEM Diploma Graduation Exam</td>
+                    <td>2025</td>
+                    <td>Ranked 16<sup>th</sup> out of 2,000 students nationwide.</td>
+                </tr>
+                <tr>
+                    <td>Top 5% - Egyptian Brain Bee</td>
+                    <td>2024</td>
+                    <td>Ranked 17<sup>th</sup> out of 1,000+ participants.</td>
+                </tr>
+                <tr>
+                    <td>1<sup>st</sup> Place - Youth Science Journal Program</td>
+                    <td>2023</td>
+                    <td>Ranked 1<sup>st</sup> in the program with a 100% final mark.</td>
+                </tr>
+            </table>
+        </section>
 
-        [cite_start]<h2>Research Projects [cite: 41]</h2>
-        <div class="item">
-            [cite_start]<div class="item-header"><span class="item-title">Advancing CRISPR/Cas-Based Therapies for Genetic Ocular Diseases: A Focus on Glaucoma and Leber's Congenital Amaurosis [cite: 42, 43]</span></div>
-            <ul>
-                [cite_start]<li>Conducted a comprehensive review and analysis of preclinical data demonstrating the potential of CRISPR/Cas-based gene editing to treat severe congenital ocular diseases, such as glaucoma and Leber's Congenital Amaurosis, while evaluating the promise of 3D organoid models for therapeutic validation. [cite: 44]</li>
-            </ul>
-        </div>
-        
-        <div class="item">
-            [cite_start]<div class="item-header"><span class="item-title">A Comparative Study of the Perceived Stress Levels and Sources of Stress [cite: 45]</span></div>
-            <ul>
-                [cite_start]<li>Designed and executed a quantitative psychological study using SPSS analysis to establish a statistically significant finding that STEM students in Egypt experience higher perceived stress than conventional students, with the primary predictors being gender and reduced sleeping hours. [cite: 46]</li>
-            </ul>
-        </div>
+        <section class="scroll-anim">
+            <h2><i class="fas fa-microscope"></i> Research Projects</h2>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">CRISPR/Cas-Based Therapies for Genetic Ocular Diseases</span>
+                </div>
+                <ul>
+                    <li>Conducted a comprehensive review of preclinical data demonstrating the potential of CRISPR/Cas gene editing for glaucoma and Leber's Congenital Amaurosis, evaluating 3D organoid models.</li>
+                </ul>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Perceived Stress Levels Study</span>
+                </div>
+                <ul>
+                    <li>Designed and executed a quantitative psychological study using SPSS analysis establishing that STEM students in Egypt experience higher stress than conventional students.</li>
+                </ul>
+            </div>
 
-        <div class="item">
-            [cite_start]<div class="item-header"><span class="item-title">Egyptian Econex [cite: 47]</span></div>
-            <ul>
-                [cite_start]<li>Developed and successfully prototyped an eco-friendly smart data center using passive ventilation (stack and cross ventilation combined with evaporative cooling), recycled materials (reed and polystyrene), and a solar-powered automated feedback system to maintain an optimal internal temperature &gt;3&deg;C lower than ambient and humidity, addressing energy and climate challenges in Egypt. [cite: 48]</li>
-            </ul>
-        </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Egyptian Econex</span>
+                </div>
+                <ul>
+                    <li>Prototyped an eco-friendly smart data center using passive ventilation, recycled materials, and a solar-powered automated feedback system to lower temperatures &gt;3&deg;C.</li>
+                </ul>
+            </div>
 
-        <div class="item">
-            [cite_start]<div class="item-header"><span class="item-title">Brine to Bloom [cite: 49]</span></div>
-            <ul>
-                [cite_start]<li>Developed a sustainable agricultural system to address Egypt's water deficit by utilizing saline water and an advanced greenhouse environment (achieving a 20% water reduction) that integrates halophilic bacteria, soil amendments (gypsum and biochar), and a Machine Learning model with 99.6% accuracy to optimize barley growth conditions. [cite: 50]</li>
-            </ul>
-        </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Brine to Bloom</span>
+                </div>
+                <ul>
+                    <li>Developed a sustainable agricultural system utilizing saline water, halophilic bacteria, and a Machine Learning model (99.6% accuracy) to optimize barley growth and achieve a 20% water reduction.</li>
+                </ul>
+            </div>
 
-        <div class="item">
-            [cite_start]<div class="item-header"><span class="item-title">Waste Water Arugula [cite: 51]</span></div>
-            <ul>
-                [cite_start]<li>Engineered and tested a three-phase vertical prototype integrating electrocoagulation, multimedia filtration, and water hyacinth phytoremediation, which successfully treated wastewater for agricultural reuse by reducing concentrations of heavy metals (Copper: 0.18 mg/L; Mercury: 0.04 mg/L) to meet design requirements and support healthy arugula growth. [cite: 52]</li>
-            </ul>
-        </div>
+            <div class="card">
+                <div class="card-header">
+                    <span class="card-title">Waste Water Arugula</span>
+                </div>
+                <ul>
+                    <li>Engineered a three-phase vertical prototype integrating electrocoagulation and water hyacinth phytoremediation to treat wastewater, reducing heavy metals for safe agricultural reuse.</li>
+                </ul>
+            </div>
+        </section>
 
-        [cite_start]<h2>Skills [cite: 53]</h2>
-        
-        [cite_start]<div class="skills-category">Data Analysis & Statistics [cite: 54]</div>
-        <ul>
-            [cite_start]<li>SPSS: Statistical analysis for psychological and survey-based research (used in perceived stress study). [cite: 55]</li>
-            [cite_start]<li>Python: Data analysis using Pandas and NumPy; data visualization for research figures and publications. [cite: 56]</li>
-            [cite_start]<li>R: Statistical computing and data analysis. [cite: 57]</li>
-        </ul>
+        <section class="scroll-anim">
+            <h2><i class="fas fa-laptop-code"></i> Skills</h2>
+            
+            <div class="skill-category">Data Analysis & Statistics</div>
+            <div class="skills-container">
+                <span class="skill-pill">SPSS</span>
+                <span class="skill-pill">Python</span>
+                <span class="skill-pill">Pandas & NumPy</span>
+                <span class="skill-pill">R</span>
+            </div>
 
-        [cite_start]<div class="skills-category">Research & Scientific Writing [cite: 58]</div>
-        <ul>
-            [cite_start]<li>LaTeX: Professional academic writing and document preparation. [cite: 59]</li>
-            [cite_start]<li>Rayyan: Systematic literature screening and review management. [cite: 60]</li>
-        </ul>
+            <div class="skill-category">Research & Scientific Writing</div>
+            <div class="skills-container">
+                <span class="skill-pill">LaTeX</span>
+                <span class="skill-pill">Rayyan</span>
+                <span class="skill-pill">Systematic Review</span>
+            </div>
 
-        [cite_start]<div class="skills-category">General Technical Skills [cite: 61]</div>
-        <ul>
-            [cite_start]<li>Microsoft Office: Word, Excel, and PowerPoint for data handling and presentation. [cite: 62]</li>
-        </ul>
+            <div class="skill-category">Technical</div>
+            <div class="skills-container">
+                <span class="skill-pill">Microsoft Office</span>
+                <span class="skill-pill">Machine Learning Basics</span>
+                <span class="skill-pill">Data Visualization</span>
+            </div>
+        </section>
 
     </div>
 
     <footer>
-        <p>Made by Omar Aboolo</p>
+        <p>Made by Omar Aboolo &copy; 2026</p>
     </footer>
 
+    <script>
+        // 1. Dark Mode Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const icon = themeToggle.querySelector('i');
+        
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            if (currentTheme === 'dark') {
+                document.documentElement.removeAttribute('data-theme');
+                icon.className = 'fas fa-moon';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                icon.className = 'fas fa-sun';
+            }
+        });
+
+        // 2. Scroll Animation (Intersection Observer)
+        const observerOptions = {
+            root: null,
+            rootMargin: '0px',
+            threshold: 0.15
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.scroll-anim').forEach(section => {
+            observer.observe(section);
+        });
+
+        // 3. Dynamic Typing Effect for Header
+        const words = ["Medical Student", "Bioinformatics Enthusiast", "Scientific Researcher", "MBBS Candidate"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedTextSpan = document.getElementById("typed-text");
+
+        function type() {
+            const currentWord = words[wordIndex];
+            
+            if (isDeleting) {
+                typedTextSpan.textContent = currentWord.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedTextSpan.textContent = currentWord.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentWord.length) {
+                typeSpeed = 2000; // Pause at end of word
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                wordIndex = (wordIndex + 1) % words.length;
+                typeSpeed = 500; // Pause before new word
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        // Start typing effect after a short delay
+        setTimeout(type, 1000);
+    </script>
 </body>
 </html>
